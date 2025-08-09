@@ -146,7 +146,7 @@ export default function MessageList() {
       {messages.length === 0 && !loading && (
         <div className="text-center py-8 text-gray-500">
           <p className="font-mono">&gt; Aucun message pour le moment</p>
-          <p className="text-sm font-mono text-gray-600">// Soyez le premier à envoyer un message !</p>
+          <p className="text-sm font-mono text-gray-600">{'// Soyez le premier à envoyer un message !'}</p>
         </div>
       )}
     </div>

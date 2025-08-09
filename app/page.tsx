@@ -11,7 +11,7 @@ export default function Home() {
             &gt; CHAT_PUBLIC.exe
           </h1>
           <p className="text-gray-400 text-sm font-mono">
-            // Accès anonyme autorisé - Partagez vos messages avec le monde
+            {'// Accès anonyme autorisé - Partagez vos messages avec le monde'}
           </p>
         </div>
       </header>
