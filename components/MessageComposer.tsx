@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { supabase } from '@/lib/supabase/client'
 
 const MAX_CONTENT_LENGTH = 300
@@ -10,6 +10,21 @@ export default function MessageComposer() {
   const [nickname, setNickname] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState('')
+
+  // Load nickname from localStorage on component mount
+  useEffect(() => {
+    const savedNickname = localStorage.getItem('chat-nickname')
+    if (savedNickname) {
+      setNickname(savedNickname)
+    }
+  }, [])
+
+  // Save nickname to localStorage when it changes
+  const handleNicknameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newNickname = e.target.value
+    setNickname(newNickname)
+    localStorage.setItem('chat-nickname', newNickname)
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -48,9 +63,8 @@ export default function MessageComposer() {
         return
       }
       
-      // Clear form on success
+      // Clear only content on success, keep nickname
       setContent('')
-      setNickname('')
       
     } catch (error) {
       console.error('Error sending message:', error)
@@ -76,7 +90,7 @@ export default function MessageComposer() {
         <input
           type="text"
           value={nickname}
-          onChange={(e) => setNickname(e.target.value)}
+          onChange={handleNicknameChange}
           placeholder="Votre pseudo (optionnel)"
           className="flex-1 px-3 py-2 bg-gray-800 border border-gray-700 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors text-sm text-gray-100 placeholder-gray-500 font-mono"
           maxLength={30}
